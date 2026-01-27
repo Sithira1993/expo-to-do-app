@@ -25,7 +25,6 @@ import {
 import { auth } from "../services/firebaseConfig";
 import { User, AuthContextType } from "../types";
 
-// Create the context with undefined default
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 /**
@@ -45,8 +44,6 @@ interface AuthProviderProps {
 /**
  * AuthProvider Component
  * Wraps the application and provides authentication state
- *
- * INTERVIEW POINT: This is wrapped in app/_layout.tsx (the entry point)
  */
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
@@ -156,8 +153,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 /**
  * Custom hook to access auth context
  * Must be used within an AuthProvider
- *
- * INTERVIEW POINT: This hook is called from screens to access user data
  */
 export function useAuth(): AuthContextType {
   const context = useContext(AuthContext);
