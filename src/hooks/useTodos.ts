@@ -16,8 +16,6 @@ import {
  * Hook to fetch and manage a list of todos for a user
  * @param userId - The current user's ID
  * @returns Object containing todos array, loading state, error, and CRUD methods
- *
- * INTERVIEW POINT: Error handling happens HERE, not in the service layer.
  */
 export function useTodos(userId: string | null): UseTodosReturn {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -40,7 +38,6 @@ export function useTodos(userId: string | null): UseTodosReturn {
       const data = await TodoService.getTodosByUserId(userId);
       setTodos(data);
     } catch (err) {
-      // INTERVIEW POINT: Exceptions from TodoService are caught HERE
       console.error("Failed to fetch todos:", err);
       setError("Failed to load your tasks. Please try again.");
     } finally {
@@ -48,7 +45,6 @@ export function useTodos(userId: string | null): UseTodosReturn {
     }
   }, [userId]);
 
-  // Fetch todos on mount and when userId changes
   useEffect(() => {
     fetchTodos();
   }, [fetchTodos]);
@@ -128,8 +124,6 @@ export function useTodos(userId: string | null): UseTodosReturn {
  * @param id - The todo document ID
  * @returns Object containing todo data, loading state, error, and update/delete methods
  *
- * INTERVIEW POINT: This is the hook called from app/task/[id].tsx
- * Error handling for TodoService.getTodoById happens HERE.
  */
 export function useTodoDetails(id: string): UseTodoDetailsReturn {
   const [todo, setTodo] = useState<Todo | null>(null);
@@ -146,8 +140,6 @@ export function useTodoDetails(id: string): UseTodoDetailsReturn {
         const data = await TodoService.getTodoById(id);
         setTodo(data);
       } catch (err) {
-        // INTERVIEW POINT: Exceptions from TodoService.getTodoById are caught HERE
-        // This is where the "missing error handling" from the service is handled
         console.error("Failed to fetch todo details:", err);
         setError("Failed to load task details. The task may not exist.");
       } finally {
