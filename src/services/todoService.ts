@@ -22,8 +22,6 @@ export const TodoService = {
    * @param id - The document ID of the todo
    * @returns The todo document data
    *
-   * INTERVIEW POINT: This function has no error handling.
-   * Errors will propagate to useTodoDetails hook.
    */
   async getTodoById(id: string): Promise<Todo> {
     const docRef = doc(db, TODOS_COLLECTION, id);
